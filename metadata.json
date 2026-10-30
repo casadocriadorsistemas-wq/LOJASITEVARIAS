@@ -1,0 +1,6 @@
+{
+  "name": "Catalogo Delivery",
+  "description": "Segue nosso Catalogo de Produtos com Preços Especiais",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

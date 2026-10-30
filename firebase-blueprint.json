@@ -1,0 +1,153 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "Pet store product or pet food item",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "lojaId": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 150 },
+        "description": { "type": "string", "maxLength": 1000 },
+        "categoryId": { "type": "string", "maxLength": 64 },
+        "imageUrl": { "type": "string", "maxLength": 500 },
+        "sellMode": { "type": "string", "enum": ["bag_and_bulk", "bag_only", "bulk_only", "unit"] },
+        "bagPrice": { "type": "number" },
+        "bagWeightKg": { "type": "number" },
+        "bulkPricePerKg": { "type": "number" },
+        "unitPrice": { "type": "number" },
+        "unitLabel": { "type": "string", "maxLength": 50 },
+        "stockKg": { "type": "number" },
+        "stockBags": { "type": "number" },
+        "stockUnits": { "type": "number" },
+        "inStock": { "type": "boolean" },
+        "isFeatured": { "type": "boolean" },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "name", "categoryId", "sellMode", "inStock"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Product category",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64 },
+        "lojaId": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 80 },
+        "slug": { "type": "string", "maxLength": 80 },
+        "icon": { "type": "string", "maxLength": 50 },
+        "sortOrder": { "type": "number" }
+      },
+      "required": ["id", "name", "slug"]
+    },
+    "Coupon": {
+      "title": "Coupon",
+      "description": "Promotional discount coupon",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64 },
+        "lojaId": { "type": "string", "maxLength": 128 },
+        "code": { "type": "string", "maxLength": 30 },
+        "discountType": { "type": "string", "enum": ["percentage", "fixed"] },
+        "discountValue": { "type": "number" },
+        "minOrderValue": { "type": "number" },
+        "isActive": { "type": "boolean" },
+        "description": { "type": "string", "maxLength": 200 }
+      },
+      "required": ["id", "code", "discountType", "discountValue", "isActive"]
+    },
+    "StoreSettings": {
+      "title": "StoreSettings",
+      "description": "General store preferences and business hours",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64 },
+        "lojaId": { "type": "string", "maxLength": 128 },
+        "storeName": { "type": "string", "maxLength": 100 },
+        "whatsappNumber": { "type": "string", "maxLength": 30 },
+        "address": { "type": "string", "maxLength": 250 },
+        "deliveryFeeType": { "type": "string", "enum": ["fixed", "free_above", "calculate"] },
+        "fixedDeliveryFee": { "type": "number" },
+        "freeDeliveryThreshold": { "type": "number" },
+        "scheduleMode": { "type": "string", "enum": ["auto", "forced_open", "forced_closed"] },
+        "closedMessage": { "type": "string", "maxLength": 500 },
+        "whatsappHelpNotice": { "type": "string", "maxLength": 200 },
+        "weekdayOpen": { "type": "string", "maxLength": 10 },
+        "weekdayClose": { "type": "string", "maxLength": 10 },
+        "saturdayOpen": { "type": "string", "maxLength": 10 },
+        "saturdayClose": { "type": "string", "maxLength": 10 },
+        "sundayOpen": { "type": "string", "maxLength": 10 },
+        "sundayClose": { "type": "string", "maxLength": 10 },
+        "isSundayClosed": { "type": "boolean" }
+      },
+      "required": ["id", "storeName", "whatsappNumber"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer order sent via WhatsApp and stored in DB",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64 },
+        "lojaId": { "type": "string", "maxLength": 128 },
+        "customerName": { "type": "string", "maxLength": 100 },
+        "customerPhone": { "type": "string", "maxLength": 30 },
+        "deliveryType": { "type": "string", "enum": ["delivery", "pickup"] },
+        "address": { "type": "string", "maxLength": 300 },
+        "paymentMethod": { "type": "string", "maxLength": 50 },
+        "notes": { "type": "string", "maxLength": 500 },
+        "subtotal": { "type": "number" },
+        "discount": { "type": "number" },
+        "deliveryFee": { "type": "number" },
+        "total": { "type": "number" },
+        "couponCode": { "type": "string", "maxLength": 30 },
+        "itemsSummary": { "type": "string", "maxLength": 2000 },
+        "status": { "type": "string", "maxLength": 30 },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "customerName", "deliveryType", "total", "status"]
+    },
+    "Customer": {
+      "title": "Customer",
+      "description": "Customer profile keyed by phone number for quick checkout and auto-fill",
+      "type": "object",
+      "properties": {
+        "phone": { "type": "string", "maxLength": 20 },
+        "formattedPhone": { "type": "string", "maxLength": 30 },
+        "name": { "type": "string", "maxLength": 120 },
+        "streetAddress": { "type": "string", "maxLength": 200 },
+        "numberAddress": { "type": "string", "maxLength": 30 },
+        "neighborhood": { "type": "string", "maxLength": 100 },
+        "reference": { "type": "string", "maxLength": 200 },
+        "lojaId": { "type": "string", "maxLength": 128 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["phone", "name"]
+    }
+  },
+  "firestore": {
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Catalog products readable by all customers and manageable by admin"
+    },
+    "/categories/{categoryId}": {
+      "schema": { "$ref": "#/entities/Category" },
+      "description": "Product categories"
+    },
+    "/coupons/{couponId}": {
+      "schema": { "$ref": "#/entities/Coupon" },
+      "description": "Discount coupons"
+    },
+    "/settings/{settingId}": {
+      "schema": { "$ref": "#/entities/StoreSettings" },
+      "description": "Store settings including business hours and WhatsApp contacts"
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Orders created by customers without login"
+    },
+    "/customers/{customerId}": {
+      "schema": { "$ref": "#/entities/Customer" },
+      "description": "Customer profiles saved for auto-fill on repeat orders"
+    }
+  }
+}

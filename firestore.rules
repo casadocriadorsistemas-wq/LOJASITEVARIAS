@@ -1,0 +1,50 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Connection testing
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+
+    // Products catalog: read and write allowed for store management via password
+    match /products/{productId} {
+      allow read, write: if true;
+    }
+
+    // Categories: read and write allowed
+    match /categories/{categoryId} {
+      allow read, write: if true;
+    }
+
+    // Coupons: read and write allowed
+    match /coupons/{couponId} {
+      allow read, write: if true;
+    }
+
+    // Store Settings (hours, whatsapp, delivery fees, admin password): read and write allowed
+    match /settings/{settingId} {
+      allow read, write: if true;
+    }
+
+    // Orders: read and write allowed
+    match /orders/{orderId} {
+      allow read, write: if true;
+    }
+
+    // Customers profiles: read and write allowed
+    match /customers/{customerId} {
+      allow read, write: if true;
+    }
+
+    // System Subscriptions: read and write allowed
+    match /subscriptions/{subscriptionId} {
+      allow read, write: if true;
+    }
+  }
+}
